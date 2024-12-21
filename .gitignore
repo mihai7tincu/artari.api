@@ -1,32 +1,61 @@
-# Prerequisites
-*.d
+# From .NET Core 3.0 you can use the command: `dotnet new gitignore` to generate a customizable .gitignore file
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+**/*.Localhost.json
 
-# Precompiled Headers
-*.gch
-*.pch
+*.swp
+*.*~
+project.lock.json
+.DS_Store
+*.pyc
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+# Visual Studio Code
+.vscode
 
-# Fortran module files
-*.mod
-*.smod
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+msbuild.log
+msbuild.err
+msbuild.wrn
+.nuget/
 
-# Executables
-*.exe
-*.out
-*.app
+# Visual Studio 2015
+.vs/
+HTSS.DataKlas.Microservice.Anaf/.idea/.idea.HTSS.DataKlas.Microservice.Anaf/.idea/encodings.xml
+HTSS.DataKlas.Microservice.Anaf/.idea/.idea.HTSS.DataKlas.Microservice.Anaf/.idea/indexLayout.xml
+HTSS.DataKlas.Microservice.Anaf/.idea/.idea.HTSS.DataKlas.Microservice.Anaf/.idea/projectSettingsUpdater.xml
+HTSS.DataKlas.Microservice.Anaf/.idea/.idea.HTSS.DataKlas.Microservice.Anaf/.idea/vcs.xml
+HTSS.DataKlas.Microservice.Anaf/.idea/.idea.HTSS.DataKlas.Microservice.Anaf/.idea/workspace.xml
+
+**/.wsuo
+**/slnx.sqlite
+.vs/efactura/v17/.wsuo
+.vs/efactura/FileContentIndex/read.lock
+.vs/efactura/v17/.wsuo
+/.vs
+.vs/efactura/v17/.wsuo
+.vs/slnx.sqlite
+.vs/efactura/v17/.wsuo
+.vs/efactura/v17/.wsuo
+.vs/slnx.sqlite
+.vs/efactura/v17/.wsuo
+.vs/slnx.sqlite
+.vs/efactura/v17/.wsuo
+/.vs/efactura/v17/.wsuo
+/.vs/slnx.sqlite
+.vs/slnx.sqlite
+.vs/slnx.sqlite

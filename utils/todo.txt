@@ -1,0 +1,33 @@
+solutie si proiect
+modele produs
+ef, db si context
+seed produse
+proiect api si controller
+swagger
+
+model produs:
+
+Product {
+  id: number;
+  type: ProductType; //acer, ginkgo, kaki
+  species: ProductSpecies; //palmatum, palmatum dissectum, shirasawanum, japonicum
+  cultivar: string; //aureum, pixie, jordan
+  name: string;
+  description: string;
+  price: number;
+  height: string;
+  propagation: string;
+  imageUrl: string;
+  priority: number;
+  isNew: boolean;
+  isSoldout: boolean;
+
+  typeName: string;
+  speciesName: string;
+}
+
+ProductType {
+  Acer = 1,
+  Ginkgo,
+  Kaki
+}
