@@ -22,16 +22,7 @@ namespace artari.entities
         public string propagation {  get; set; }
         public string speciesName { get; set; }
         public string cultivar { get; set; }
-
-
-
-
-
-    /*
-
-  type: ProductType; //acer, ginkgo, kaki
-  species: ProductSpecies; //palmatum, palmatum dissectum, shirasawanum, japonicum
-    */
-
+        public ProductSpecies species { get; set; }
+        public ProductType type { get; set; }
 }
 }
