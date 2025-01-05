@@ -1,0 +1,15 @@
+//initial migration
+dotnet ef migrations add InitialCreate --project artari.entities --startup-project artari.api --context ArtariDbContext --configuration --verbose
+
+
+//update migration
+Update-Database
+
+// db user setup
+ USE [master]
+ GO
+ ALTER LOGIN [sa] WITH PASSWORD=N'artari.api.db123'
+ GO
+ ALTER LOGIN [sa] ENABLE
+ GO
+
