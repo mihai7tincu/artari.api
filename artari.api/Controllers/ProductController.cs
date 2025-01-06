@@ -47,7 +47,7 @@ namespace artari.api.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<Product>> UpdateProduct([FromBody]Product updatedProduct)
+        public async Task<ActionResult<Product>> UpdateProduct([FromBody] Product updatedProduct)
         {
             var dbProduct = await _context.Products.FindAsync(updatedProduct.Id);
 

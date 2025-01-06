@@ -15,8 +15,8 @@ Update-Database
 
 
  //todo
- 1. seed products
- 2. implement get by id endpoint, get all, create si update endpoints
+ 1. seed products --
+ 2. implement get by id endpoint, get all, create si update endpoints --
  3. create order entity
  4. design stock/orders db architecture 
  5. place an order

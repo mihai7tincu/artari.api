@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using artari.entities;
 
@@ -10,9 +11,11 @@ using artari.entities;
 namespace artari.entities.Migrations
 {
     [DbContext(typeof(ArtariDbContext))]
-    partial class ArtariDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250106131713_ProductSeed2")]
+    partial class ProductSeed2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

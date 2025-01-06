@@ -9,8 +9,10 @@ namespace artari.entities.Products
         {
             builder.ToTable(name: nameof(Product), schema: ArtariDbContext.Schema);
             builder.HasKey(x => x.Id);
+            builder.Property(x => x.Name).HasMaxLength(32);
 
-            //builder.HasData(Seed.Data.GetProducts());
+           
+            builder.HasData(Seed.ProductData.GetProducts());
         }
     }
 }

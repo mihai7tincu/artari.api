@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using artari.entities;
 
@@ -10,9 +11,11 @@ using artari.entities;
 namespace artari.entities.Migrations
 {
     [DbContext(typeof(ArtariDbContext))]
-    partial class ArtariDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250106131459_ProductSeed")]
+    partial class ProductSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,7 +83,7 @@ namespace artari.entities.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = -1,
                             Cultivar = "Bloodgood",
                             Description = "red leaves",
                             Height = "22",
@@ -98,7 +101,7 @@ namespace artari.entities.Migrations
                         },
                         new
                         {
-                            Id = 2,
+                            Id = -2,
                             Cultivar = "Atropurpureum",
                             Description = "red leaves",
                             Height = "22",
@@ -116,7 +119,7 @@ namespace artari.entities.Migrations
                         },
                         new
                         {
-                            Id = 3,
+                            Id = -3,
                             Cultivar = "Green Cascade",
                             Description = "green leaves",
                             Height = "22",
