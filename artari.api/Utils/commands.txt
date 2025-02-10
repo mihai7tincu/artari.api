@@ -17,10 +17,13 @@ Update-Database
  //todo
  1. seed products --
  2. implement get by id endpoint, get all, create si update endpoints --
- 3. create order entity
+ 3. create order entity -- 
+				cqrs pattern
  4. design stock/orders db architecture 
  5. place an order
  6. store product images info
  7. add product price details
  8. add promotions functionality
  9. create get all, get by id, create and update order endpoints
+ 10. repository pattern
+ 11. cqrs pattern

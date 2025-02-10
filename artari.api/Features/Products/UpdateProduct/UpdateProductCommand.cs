@@ -1,7 +1,9 @@
-﻿
-namespace artari.entities.Products
+﻿using artari.entities;
+using MediatR;
+
+namespace artari.api.Features.Products.UpdateProduct
 {
-    public class Product
+    public class UpdateProductCommand : IRequest<int>
     {
         public int Id { get; set; }
         public string? Name { get; set; }
@@ -19,6 +21,5 @@ namespace artari.entities.Products
         public ProductSpecies? Species { get; set; }
         public ProductType? Type { get; set; }
 
-        //public virtual ICollection<OrderProducts>? OrderProducts { get; set; } = new List<OrderProducts>();
     }
 }

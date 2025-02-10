@@ -1,4 +1,6 @@
-﻿using artari.entities.Products;
+﻿using artari.entities.Customers;
+using artari.entities.Orders;
+using artari.entities.Products;
 using Microsoft.EntityFrameworkCore;
 
 namespace artari.entities
@@ -17,5 +19,8 @@ namespace artari.entities
         }
 
         public DbSet<Product> Products { get; set; } = default!;
+        public DbSet<Order> Orders { get; set; } = default!;
+        public DbSet<Customer> Customers { get; set; } = default!;
+
     }
 }

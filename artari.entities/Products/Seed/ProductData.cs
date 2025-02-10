@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace artari.entities.Products.Seed
 {
-    internal class ProductData
+    public class ProductData
     {
         public static IEnumerable<Product> GetProducts() =>
         [

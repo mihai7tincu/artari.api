@@ -1,5 +1,9 @@
-﻿using artari.entities;
+﻿using artari.api.Features.Products.CreateProduct;
+using artari.api.Features.Products.DeleteProduct;
+using artari.api.Features.Products.UpdateProduct;
+using artari.entities;
 using artari.entities.Products;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,24 +13,25 @@ namespace artari.api.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly ArtariDbContext _context;
+        private readonly ISender _sender;
 
-        public ProductController(ArtariDbContext context)
+
+        public ProductController(ISender sender)
         {
-            _context = context;
+            _sender = sender;
         }
 
         [HttpGet]
         public async Task<ActionResult<List<Product>>> GetAllProducts()
         {
-            var products = await _context.Products.Where(x => x.Id > 0).ToListAsync();
+            var products = await _sender.Send(new Features.Products.GetAllProducts.GetAllProductsQuery());
             return Ok(products);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProductById(int id)
+        public async Task<IActionResult> GetProductById(int id)
         {
-            var product = await _context.Products.FindAsync(id);
+            var product = await _sender.Send(new Features.Products.GetProductById.GetProductByIdQuery(id));
             if (product is null)
             {
                 return NotFound("Product not found");
@@ -35,65 +40,24 @@ namespace artari.api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<Product>>> AddProduct(Product product)
+        public async Task<ActionResult<int>> CreateProduct(CreateProductCommand command)
         {
-
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
-
-            return Ok(
-                //await _context.Products.Where(x => x.Id > 0).ToListAsync()
-                );
+            var productId = await _sender.Send(command);
+            return Ok(productId);
         }
 
         [HttpPut]
-        public async Task<ActionResult<Product>> UpdateProduct([FromBody] Product updatedProduct)
+        public async Task<ActionResult<int>> UpdateProduct(UpdateProductCommand command)
         {
-            var dbProduct = await _context.Products.FindAsync(updatedProduct.Id);
-
-            if (dbProduct is null)
-            {
-                return NotFound("Product not found");
-            }
-
-            dbProduct.Name = updatedProduct.Name;
-            dbProduct.Description = updatedProduct.Description;
-            dbProduct.Cultivar = updatedProduct.Cultivar;
-            dbProduct.Height = updatedProduct.Height;
-            dbProduct.ImageUrl = updatedProduct.ImageUrl;
-            dbProduct.IsNew = updatedProduct.IsNew;
-            dbProduct.IsSoldout = updatedProduct.IsSoldout;
-            dbProduct.Price = updatedProduct.Price;
-            dbProduct.TypeName = updatedProduct.TypeName;
-            dbProduct.Priority = updatedProduct.Priority;
-            dbProduct.Propagation = updatedProduct.Propagation;
-            dbProduct.SpeciesName = updatedProduct.SpeciesName;
-            dbProduct.Species = updatedProduct.Species;
-            dbProduct.Type = updatedProduct.Type;
-
-            dbProduct = updatedProduct;
-            await _context.SaveChangesAsync();
-
-            return Ok(
-                //await _context.Products.Where(x => x.Id > 0).ToListAsync()
-                );
+            var productId = await _sender.Send(command);
+            return Ok(productId);
         }
 
         [HttpDelete]
-        public async Task<ActionResult<Product>> RemoveProduct(int id)
+        public async Task<IActionResult> RemoveProduct(int id)
         {
-            var product = await _context.Products.FindAsync(id);
-            if (product is null)
-            {
-                return NotFound("Product not found");
-            }
-
-            _context.Products.Remove(product);
-
-            await _context.SaveChangesAsync();
-            return Ok(
-                //await _context.Products.Where(x => x.Id > 0).ToListAsync()
-                );
+            await _sender.Send(new DeleteProductCommand(id));
+            return Ok();
         }
     }
 }

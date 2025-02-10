@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using artari.entities;
 
@@ -10,9 +11,11 @@ using artari.entities;
 namespace artari.entities.Migrations
 {
     [DbContext(typeof(ArtariDbContext))]
-    partial class ArtariDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250116101404_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,7 +56,7 @@ namespace artari.entities.Migrations
                     b.ToTable("Customer", "artari");
                 });
 
-            modelBuilder.Entity("artari.entities.Orders.Order", b =>
+            modelBuilder.Entity("artari.entities.Customers.CustomerOrders", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,6 +66,26 @@ namespace artari.entities.Migrations
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("CustomerOrders", "artari");
+                });
+
+            modelBuilder.Entity("artari.entities.Orders.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("DeliveryAddress")
                         .HasColumnType("nvarchar(max)");
@@ -86,8 +109,6 @@ namespace artari.entities.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
 
                     b.ToTable("Order", "artari");
                 });
@@ -227,15 +248,23 @@ namespace artari.entities.Migrations
                         });
                 });
 
-            modelBuilder.Entity("artari.entities.Orders.Order", b =>
+            modelBuilder.Entity("artari.entities.Customers.CustomerOrders", b =>
                 {
                     b.HasOne("artari.entities.Customers.Customer", "Customer")
-                        .WithMany("Orders")
+                        .WithMany("CustomerOrders")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("artari.entities.Orders.Order", "Order")
+                        .WithMany("CustomerOrders")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Customer");
+
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("artari.entities.Orders.OrderProducts", b =>
@@ -259,11 +288,13 @@ namespace artari.entities.Migrations
 
             modelBuilder.Entity("artari.entities.Customers.Customer", b =>
                 {
-                    b.Navigation("Orders");
+                    b.Navigation("CustomerOrders");
                 });
 
             modelBuilder.Entity("artari.entities.Orders.Order", b =>
                 {
+                    b.Navigation("CustomerOrders");
+
                     b.Navigation("OrderProducts");
                 });
 

@@ -11,8 +11,8 @@ using artari.entities;
 namespace artari.entities.Migrations
 {
     [DbContext(typeof(ArtariDbContext))]
-    [Migration("20250106131459_ProductSeed")]
-    partial class ProductSeed
+    [Migration("20250116181609_updateorderproducts")]
+    partial class updateorderproducts
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,99 @@ namespace artari.entities.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("artari.entities.Customers.Customer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Phone")
+                        .IsUnique();
+
+                    b.ToTable("Customer", "artari");
+                });
+
+            modelBuilder.Entity("artari.entities.Orders.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DeliveryAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrderDate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrderNotes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OrderNumber")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("PayOnDelivery")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("PickupDelivery")
+                        .HasColumnType("bit");
+
+                    b.Property<long?>("TotalPrice")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("Order", "artari");
+                });
+
+            modelBuilder.Entity("artari.entities.Orders.OrderProducts", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderProducts", "artari");
+                });
 
             modelBuilder.Entity("artari.entities.Products.Product", b =>
                 {
@@ -83,7 +176,7 @@ namespace artari.entities.Migrations
                     b.HasData(
                         new
                         {
-                            Id = -1,
+                            Id = 1,
                             Cultivar = "Bloodgood",
                             Description = "red leaves",
                             Height = "22",
@@ -101,7 +194,7 @@ namespace artari.entities.Migrations
                         },
                         new
                         {
-                            Id = -2,
+                            Id = 2,
                             Cultivar = "Atropurpureum",
                             Description = "red leaves",
                             Height = "22",
@@ -119,7 +212,7 @@ namespace artari.entities.Migrations
                         },
                         new
                         {
-                            Id = -3,
+                            Id = 3,
                             Cultivar = "Green Cascade",
                             Description = "green leaves",
                             Height = "22",
@@ -135,6 +228,51 @@ namespace artari.entities.Migrations
                             Type = 0,
                             TypeName = "Acer"
                         });
+                });
+
+            modelBuilder.Entity("artari.entities.Orders.Order", b =>
+                {
+                    b.HasOne("artari.entities.Customers.Customer", "Customer")
+                        .WithMany("Orders")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("artari.entities.Orders.OrderProducts", b =>
+                {
+                    b.HasOne("artari.entities.Orders.Order", "Order")
+                        .WithMany("OrderProducts")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("artari.entities.Products.Product", "Product")
+                        .WithMany("OrderProducts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("artari.entities.Customers.Customer", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("artari.entities.Orders.Order", b =>
+                {
+                    b.Navigation("OrderProducts");
+                });
+
+            modelBuilder.Entity("artari.entities.Products.Product", b =>
+                {
+                    b.Navigation("OrderProducts");
                 });
 #pragma warning restore 612, 618
         }

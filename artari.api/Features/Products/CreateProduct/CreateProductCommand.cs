@@ -1,7 +1,9 @@
-﻿
-namespace artari.entities.Products
+﻿using artari.entities;
+using MediatR;
+
+namespace artari.api.Features.Products.CreateProduct
 {
-    public class Product
+    public class CreateProductCommand : IRequest<int>
     {
         public int Id { get; set; }
         public string? Name { get; set; }
